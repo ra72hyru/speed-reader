@@ -5,12 +5,18 @@ export const Colors = {
     dark: {
         title: '#ffffff',
         text: '#f0f0f0',
-        background: '#000000',
+        background: '#050505',
+        background2: '#1f1f1f',
+        background3: '#383838',
+        borderColor: '#757575'
     },
 
     light: {
         title: '#000000',
         text: '#0f0f0f',
-        background: '#ffffff',
+        background: '#f2f2f2',
+        background2: '#fafafa',
+        background3: '#ffffff',
+        borderColor: '#707070',
     }
 };

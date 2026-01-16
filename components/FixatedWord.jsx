@@ -17,17 +17,17 @@ const FixatedWord = ({ word, indentation = 120, height = 60, fontSize = 36 }) =>
     const anchorWidth = fontSize * 0.6;
 
     return (
-    <View style={{height: height, width: '100%', flexDirection: 'row'}}>
-        <View style={{width: indentation - anchorWidth / 2, alignItems: 'flex-end', fontSize}}>
-            <Text style={{fontSize, fontFamily: 'monospace'}}>{word.slice(0, fixedIndex)}</Text>
-        </View>
-        <View style={{width: anchorWidth, alignItems: 'center'}}>
-            <Text style={{color: 'red', fontSize, fontFamily: 'monospace'}}>{word.slice(fixedIndex, fixedIndex + 1)}</Text>
-        </View>
-        <View style={{flex: 1, alignItems: 'flex-start'}}>
-            <Text style={{fontSize, fontFamily: 'monospace'}}>{word.slice(fixedIndex + 1)}</Text>
-        </View>
-    </View>
+    <ThemedView style={{height: height, width: '100%', flexDirection: 'row'}}>
+        <ThemedView style={{width: indentation - anchorWidth / 2, alignItems: 'flex-end', fontSize}}>
+            <ThemedText style={{fontSize, fontFamily: 'monospace'}}>{word.slice(0, fixedIndex)}</ThemedText>
+        </ThemedView>
+        <ThemedView style={{width: anchorWidth, alignItems: 'center'}}>
+            <ThemedText style={{color: 'red', fontSize, fontFamily: 'monospace'}}>{word.slice(fixedIndex, fixedIndex + 1)}</ThemedText>
+        </ThemedView>
+        <ThemedView style={{flex: 1, alignItems: 'flex-start'}}>
+            <ThemedText style={{fontSize, fontFamily: 'monospace'}}>{word.slice(fixedIndex + 1)}</ThemedText>
+        </ThemedView>
+    </ThemedView>
     );
 };
 
