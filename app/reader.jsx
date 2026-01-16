@@ -5,11 +5,14 @@ import { useEffect, useMemo, useState } from 'react';
 import Word from '../components/Word';
 import FixatedWord from '../components/FixatedWord';
 import ThemedTextInput from '../components/ThemedTextInput';
+import ThemedRangeInputWithButtons from '../components/ThemedRangeInputWithButtons';
 
 const Reader = () => {
     //const words = ["This", "is", "a", "small", "test.", "Just", "for", "testing", "purposes.", "Here", "desoxyribonukleinsäure", "came", "a", "long", "word."];
     
     const [text, setText] = useState("")
+    const [wordsPerMin, setWordsPerMin] = useState(300)
+
 
     const words = useMemo(() => {
         return text.split(/\s+/)
@@ -25,16 +28,16 @@ const Reader = () => {
         setWord(words[0]);
         let i = 0;
         const intvl = setInterval(() => {
-            setWord(() => words[i]);
-            i++;
-            if (i === words.length) {
-                clearInterval(intvl);
+            if (i >= words.length) {
+                //clearInterval(intvl);
                 setRunning(false);
             }
-        }, 1000)
+            setWord(() => words[i]);
+            i++;
+        }, 60 / wordsPerMin * 1000)
 
         return () => clearInterval(intvl);
-    }, [running])
+    }, [running, words, wordsPerMin])
 
     return (
         <ThemedView style={styles.container}>
@@ -58,6 +61,8 @@ const Reader = () => {
                 <Pressable>
                     <ThemedText>Pause</ThemedText>
                 </Pressable>}
+                <ThemedRangeInputWithButtons wordsPerMinute={wordsPerMin} onChange={setWordsPerMin}/> 
+                <ThemedText>{wordsPerMin}</ThemedText>
         </ThemedView>
     )
 }
