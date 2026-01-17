@@ -24,7 +24,6 @@ const Reader = () => {
     const iRef = useRef(0)
     
     const handleRewind = useCallback(() => {
-        console.log("words.length")
         iRef.current = Math.max(iRef.current - 9, 0);
         setWord(words[iRef.current]);
     }, [words])
