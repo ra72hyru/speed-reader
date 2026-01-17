@@ -6,7 +6,7 @@ import Word from '../components/Word';
 import FixatedWord from '../components/FixatedWord';
 import ThemedTextInput from '../components/ThemedTextInput';
 import ThemedRangeInputWithButtons from '../components/ThemedRangeInputWithButtons';
-import MenuBar from '../components/MenuBar';
+import ControlBar from '../components/ControlBar';
 
 const Reader = () => {
     //const words = ["This", "is", "a", "small", "test.", "Just", "for", "testing", "purposes.", "Here", "desoxyribonukleinsäure", "came", "a", "long", "word."];
@@ -59,7 +59,7 @@ const Reader = () => {
                 </ThemedText>
             </Pressable>}
             {running && 
-                <MenuBar 
+                <ControlBar 
                     style={{width: '90%', marginLeft: 8, marginRight: 8, backgroundColor: 'green'}}
                     paused={paused}
                     onPause={setPaused}

@@ -2,7 +2,7 @@ import { View, Text, Pressable } from 'react-native'
 import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import ThemedView from './ThemedView'
 
-const MenuBar = ({ paused=false, size=32, style, onPause }) => {
+const ControlBar = ({ paused=false, size=32, style, onPause }) => {
 
 
     return (
@@ -38,4 +38,4 @@ const MenuBar = ({ paused=false, size=32, style, onPause }) => {
     )
 }
 
-export default MenuBar
+export default ControlBar
