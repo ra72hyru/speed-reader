@@ -2,12 +2,12 @@ import { View, Text, Pressable } from 'react-native'
 import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import ThemedView from './ThemedView'
 
-const ControlBar = ({ paused=false, size=32, style, onPause }) => {
+const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward }) => {
 
 
     return (
         <ThemedView style={[{flexDirection: 'row', justifyContent: 'space-around'}, style]}>
-            <Pressable>
+            <Pressable onPress={() => onRewind()}>
                 <SimpleLineIcons 
                     name='control-rewind'
                     size={size}
@@ -28,7 +28,7 @@ const ControlBar = ({ paused=false, size=32, style, onPause }) => {
                     />
                 </Pressable>
             }
-            <Pressable>
+            <Pressable onPress={() => onForward()}>
                 <SimpleLineIcons 
                     name='control-forward'
                     size={size}

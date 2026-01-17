@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet } from 'react-native'
 import ThemedView from '../components/ThemedView'
 import ThemedText from '../components/ThemedText';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Word from '../components/Word';
 import FixatedWord from '../components/FixatedWord';
 import ThemedTextInput from '../components/ThemedTextInput';
@@ -21,21 +21,39 @@ const Reader = () => {
     const [word, setWord] = useState("");
     const [running, setRunning] = useState(false);
     const [paused, setPaused] = useState(false);
+    const iRef = useRef(0)
     
+    const handleRewind = useCallback(() => {
+        console.log("words.length")
+        iRef.current = Math.max(iRef.current - 9, 0);
+        setWord(words[iRef.current]);
+    }, [words])
+
+    const handleForward = useCallback(() => {
+        iRef.current = Math.min(iRef.current + 9, words.length - 1);
+        setWord(words[iRef.current]);
+    }, [words])
+
     useEffect(() => {
         if (!running || paused)
             return;
 
-        setWord(words[0]);
-        let i = 0;
-        const intvl = setInterval(() => {
-            if (i >= words.length) {
-                //clearInterval(intvl);
+        const set = () => {
+            const currentI = iRef.current;
+
+            if (currentI >= words.length) {
                 setRunning(false);
+                iRef.current = 0;
+                return;
             }
-            setWord(() => words[i]);
-            i++;
-        }, 60 / wordsPerMin * 1000)
+
+            setWord(() => words[currentI]);
+            iRef.current += 1;
+        }
+
+        set();
+
+        const intvl = setInterval(set, 60 / wordsPerMin * 1000)
 
         return () => clearInterval(intvl);
     }, [running, words, wordsPerMin, paused])
@@ -63,6 +81,8 @@ const Reader = () => {
                     style={{width: '90%', marginLeft: 8, marginRight: 8, backgroundColor: 'green'}}
                     paused={paused}
                     onPause={setPaused}
+                    onRewind={handleRewind}
+                    onForward={handleForward}
                 />
             }
             <ThemedRangeInputWithButtons wordsPerMinute={wordsPerMin} onChange={setWordsPerMin}/> 
