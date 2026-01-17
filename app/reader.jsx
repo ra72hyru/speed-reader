@@ -6,6 +6,7 @@ import Word from '../components/Word';
 import FixatedWord from '../components/FixatedWord';
 import ThemedTextInput from '../components/ThemedTextInput';
 import ThemedRangeInputWithButtons from '../components/ThemedRangeInputWithButtons';
+import MenuBar from '../components/MenuBar';
 
 const Reader = () => {
     //const words = ["This", "is", "a", "small", "test.", "Just", "for", "testing", "purposes.", "Here", "desoxyribonukleinsäure", "came", "a", "long", "word."];
@@ -13,16 +14,16 @@ const Reader = () => {
     const [text, setText] = useState("")
     const [wordsPerMin, setWordsPerMin] = useState(300)
 
-
     const words = useMemo(() => {
         return text.split(/\s+/)
     }, [text])
 
     const [word, setWord] = useState("");
     const [running, setRunning] = useState(false);
+    const [paused, setPaused] = useState(false);
     
     useEffect(() => {
-        if (!running)
+        if (!running || paused)
             return;
 
         setWord(words[0]);
@@ -37,7 +38,7 @@ const Reader = () => {
         }, 60 / wordsPerMin * 1000)
 
         return () => clearInterval(intvl);
-    }, [running, words, wordsPerMin])
+    }, [running, words, wordsPerMin, paused])
 
     return (
         <ThemedView style={styles.container}>
@@ -58,11 +59,14 @@ const Reader = () => {
                 </ThemedText>
             </Pressable>}
             {running && 
-                <Pressable>
-                    <ThemedText>Pause</ThemedText>
-                </Pressable>}
-                <ThemedRangeInputWithButtons wordsPerMinute={wordsPerMin} onChange={setWordsPerMin}/> 
-                <ThemedText>{wordsPerMin}</ThemedText>
+                <MenuBar 
+                    style={{width: '90%', marginLeft: 8, marginRight: 8, backgroundColor: 'green'}}
+                    paused={paused}
+                    onPause={setPaused}
+                />
+            }
+            <ThemedRangeInputWithButtons wordsPerMinute={wordsPerMin} onChange={setWordsPerMin}/> 
+            <ThemedText>{wordsPerMin}</ThemedText>
         </ThemedView>
     )
 }
@@ -71,7 +75,8 @@ export default Reader
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%'
+        height: '100%',
+        alignItems: 'stretch'
     },
     input: {
         borderColor: 'black',

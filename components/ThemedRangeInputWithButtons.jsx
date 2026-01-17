@@ -5,7 +5,7 @@ import ThemedView from './ThemedView'
 import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import { Colors } from '../constants/Color'
 
-const ThemedRangeInputWithButtons = ({width=60, wordsPerMinute=300, onChange, lowerLimit=60, upperLimit=1000, step=5 }) => {
+const ThemedRangeInputWithButtons = ({width=60, wordsPerMinute=300, onChange, lowerLimit=60, upperLimit=1000, step=5, size=28 }) => {
     const colorScheme = useColorScheme()
     const theme = Colors[colorScheme] ?? Colors.light
 
@@ -14,7 +14,7 @@ const ThemedRangeInputWithButtons = ({width=60, wordsPerMinute=300, onChange, lo
             <Pressable style={{alignItems: 'flex-end'}} onPress={() => onChange(prev => prev === lowerLimit ? prev : prev - step)}>
                 <SimpleLineIcons 
                     name='minus'
-                    size={28}
+                    size={size}
                     color={theme.text}
                 />
             </Pressable>
@@ -33,7 +33,7 @@ const ThemedRangeInputWithButtons = ({width=60, wordsPerMinute=300, onChange, lo
             <Pressable style={{alignItems: 'flex-start'}} onPress={() => onChange(prev => prev === upperLimit ? prev : prev + step)}>
                 <SimpleLineIcons 
                     name='plus'
-                    size={28}
+                    size={size}
                     color={theme.text}
                 />
             </Pressable>
