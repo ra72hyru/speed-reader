@@ -10,7 +10,7 @@ const getFixationIndex = (word) => {
     return 3;
 };
 
-const FixatedWord = ({ word, indentation = 120, height = 50, fontSize = 36 }) => {
+const FixatedWord = ({ word, indentation = 120, height = 50, fontSize = 36, crosshairWidth = 2, crosshairDistance = 16, crosshairHeight = 16 }) => {
 
     const fixedIndex = getFixationIndex(word)
 
@@ -18,8 +18,19 @@ const FixatedWord = ({ word, indentation = 120, height = 50, fontSize = 36 }) =>
 
     return (
     <ThemedView style={{alignItems: 'center', marginBottom: 10}}>
-        <ThemedView style={{width: '95%', flexDirection: 'row', borderTopWidth: 2}}>
-            <ThemedView style={{width: indentation - anchorWidth / 2, alignItems: 'flex-end', borderRightWidth: 2, height: 16}}></ThemedView>
+        {/* <ThemedView style={{width: '100%', backgroundColor: 'red', alignItems: 'center'}}>
+            <ThemedView style={{width: '95%', flexDirection: 'row', backgroundColor: 'black', height: 2}} />
+            <ThemedView style={{width: '95%', flexDirection: 'row', backgroundColor: 'green'}}>
+                <ThemedView style={{width: indentation - anchorWidth / 2, alignItems: 'flex-end', backgroundColor: 'black', height: 16}} />
+            </ThemedView>
+        </ThemedView> */}
+
+        {
+            //ghost top crosshair for moving the word accordingly
+        }
+        <ThemedView style={{width: '95%', height: crosshairDistance, backgroundColor: 'rgba(0, 0, 0, 0)'}}>
+            <ThemedView style={{backgroundColor: 'rgba(0, 0, 0, 0)', height: crosshairWidth, position: 'absolute', top: 0, left: 0, right: 0}} />
+            <ThemedView style={{backgroundColor: 'rgba(0, 0, 0, 0)', width: crosshairWidth, height: crosshairHeight, position: 'absolute', left: indentation - anchorWidth / 2}} />
         </ThemedView>
 
         <ThemedView style={{width: '100%', flexDirection: 'row', borderWidth: 0, alignItems: 'center'}}>
@@ -34,8 +45,21 @@ const FixatedWord = ({ word, indentation = 120, height = 50, fontSize = 36 }) =>
             </ThemedView>
         </ThemedView>
 
-        <ThemedView style={{width: '95%', flexDirection: 'row', borderBottomWidth: 2, padding: 0}}>
-            <ThemedView style={{width: indentation - anchorWidth / 2, alignItems: 'flex-end', borderRightWidth: 2, height: 16}}></ThemedView>
+        {
+            //1. top crosshair part
+            //2. lower crosshair part
+        }
+
+        <ThemedView style={{width: '95%', height: crosshairDistance, position: 'absolute', top: 0, backgroundColor: 'rgba(0, 0, 0, 0)'}}>
+            <ThemedView style={{backgroundColor: 'black', height: crosshairWidth, position: 'absolute', top: 0, left: 0, right: 0}} />
+            <ThemedView style={{backgroundColor: 'black', width: crosshairWidth, height: crosshairHeight, position: 'absolute', left: indentation - anchorWidth / 2}} />
+        </ThemedView>
+
+        <ThemedView style={{width: '95%', height: crosshairDistance}}>
+            <ThemedView style={{backgroundColor: 'black', 
+                                width: crosshairWidth, height: crosshairHeight, 
+                                position: 'absolute', left: indentation - anchorWidth / 2, top: crosshairDistance - crosshairHeight}} />
+            <ThemedView style={{backgroundColor: 'black', height: crosshairWidth, position: 'absolute', bottom: 0, left: 0, right: 0}} />
         </ThemedView>
     </ThemedView>
     );
