@@ -68,7 +68,9 @@ const Reader = () => {
                 />
             }
             <ThemedText>{text}</ThemedText>
-            {word !== undefined && <FixatedWord word={word} style={{height: 60, fontSize: 36}}/>}
+            {word !== undefined && 
+                <FixatedWord word={word} style={{height: 60, fontSize: 36}} />
+            }
             {!running && <Pressable onPress={() => setRunning(true)}
                                     style={{width: '50%', height: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'purple', borderRadius: 8, margin: 8}}>
                 <ThemedText>
