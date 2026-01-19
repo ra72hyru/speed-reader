@@ -7,6 +7,7 @@ import FixatedWord from '../components/FixatedWord';
 import ThemedTextInput from '../components/ThemedTextInput';
 import ThemedRangeInputWithButtons from '../components/ThemedRangeInputWithButtons';
 import ControlBar from '../components/ControlBar';
+import ThemedCrosshair from '../components/ThemedCrosshair';
 
 const Reader = () => {
     //const words = ["This", "is", "a", "small", "test.", "Just", "for", "testing", "purposes.", "Here", "desoxyribonukleinsäure", "came", "a", "long", "word."];
@@ -77,16 +78,29 @@ const Reader = () => {
                     backgroundColorLevel={1}
                 />
             }
+
             <ThemedText>{text}</ThemedText>
-            {word !== undefined && 
-                <FixatedWord word={word} style={{height: 60, fontSize: 36}} />
+
+            {word !== "" && 
+                <ThemedCrosshair>
+                    <FixatedWord 
+                        word={word} 
+                        style={{height: 60, fontSize: 36}} 
+                    />
+                </ThemedCrosshair>
             }
-            {!running && <Pressable onPress={() => setRunning(true)}
-                                    style={{width: '50%', height: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'purple', borderRadius: 8, margin: 8}}>
-                <ThemedText>
-                    Start
-                </ThemedText>
-            </Pressable>}
+
+            {!running && 
+                <Pressable 
+                    onPress={() => setRunning(true)}
+                    style={{width: '50%', height: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'purple', borderRadius: 8, margin: 8}}
+                >
+                    <ThemedText>
+                        Start
+                    </ThemedText>
+                </Pressable>
+            }
+
             {running && 
                 <ControlBar 
                     style={{width: '90%', marginLeft: 8, marginRight: 8, backgroundColor: 'green'}}
@@ -98,7 +112,12 @@ const Reader = () => {
                     onEnd={handleGoToEnd}
                 />
             }
-            <ThemedRangeInputWithButtons wordsPerMinute={wordsPerMin} onChange={setWordsPerMin}/> 
+
+            <ThemedRangeInputWithButtons 
+                wordsPerMinute={wordsPerMin} 
+                onChange={setWordsPerMin}
+            /> 
+            
             <ThemedText>{wordsPerMin}</ThemedText>
         </ThemedView>
     )

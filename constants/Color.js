@@ -8,7 +8,7 @@ export const Colors = {
         background: '#050505',
         background2: '#1f1f1f',
         background3: '#383838',
-        borderColor: '#757575'
+        borderColor: '#757575',
     },
 
     light: {
