@@ -8,8 +8,9 @@ import ThemedTextInput from '../components/ThemedTextInput';
 import ThemedRangeInputWithButtons from '../components/ThemedRangeInputWithButtons';
 import ControlBar from '../components/ControlBar';
 import ThemedCrosshair from '../components/ThemedCrosshair';
+import Reader from '../components/Reader';
 
-const Reader = () => {
+const ReaderPage = () => {
     //const words = ["This", "is", "a", "small", "test.", "Just", "for", "testing", "purposes.", "Here", "desoxyribonukleinsäure", "came", "a", "long", "word."];
     
     const [text, setText] = useState("")
@@ -81,16 +82,17 @@ const Reader = () => {
 
             <ThemedText>{text}</ThemedText>
 
-            {word !== "" && 
-                <ThemedCrosshair>
-                    <FixatedWord 
-                        word={word} 
-                        style={{height: 60, fontSize: 36}} 
-                    />
-                </ThemedCrosshair>
-            }
-
-            {!running && 
+            {running ?
+                <Reader 
+                    word={word} 
+                    paused={paused} 
+                    onPause={setPaused} 
+                    onRewind={handleRewind} 
+                    onForward={handleForward} 
+                    onStart={handleGoToStart} 
+                    onEnd={handleGoToEnd}
+                /> 
+                :
                 <Pressable 
                     onPress={() => setRunning(true)}
                     style={{width: '50%', height: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'purple', borderRadius: 8, margin: 8}}
@@ -101,29 +103,17 @@ const Reader = () => {
                 </Pressable>
             }
 
-            {running && 
-                <ControlBar 
-                    style={{width: '90%', marginLeft: 8, marginRight: 8, backgroundColor: 'green'}}
-                    paused={paused}
-                    onPause={setPaused}
-                    onRewind={handleRewind}
-                    onForward={handleForward}
-                    onStart={handleGoToStart}
-                    onEnd={handleGoToEnd}
-                />
-            }
-
             <ThemedRangeInputWithButtons 
                 wordsPerMinute={wordsPerMin} 
                 onChange={setWordsPerMin}
             /> 
-            
+
             <ThemedText>{wordsPerMin}</ThemedText>
         </ThemedView>
     )
 }
 
-export default Reader
+export default ReaderPage
 
 const styles = StyleSheet.create({
     container: {
