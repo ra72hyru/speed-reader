@@ -33,6 +33,16 @@ const Reader = () => {
         setWord(words[iRef.current]);
     }, [words])
 
+    const handleGoToStart = useCallback(() => {
+        iRef.current = 0;
+        setWord(words[iRef.current]);
+    }, [words])
+
+    const handleGoToEnd = useCallback(() => {
+        iRef.current = words.length - 1;
+        setWord(words[iRef.current]);
+    }, [words])
+
     useEffect(() => {
         if (!running || paused)
             return;
@@ -84,6 +94,8 @@ const Reader = () => {
                     onPause={setPaused}
                     onRewind={handleRewind}
                     onForward={handleForward}
+                    onStart={handleGoToStart}
+                    onEnd={handleGoToEnd}
                 />
             }
             <ThemedRangeInputWithButtons wordsPerMinute={wordsPerMin} onChange={setWordsPerMin}/> 
