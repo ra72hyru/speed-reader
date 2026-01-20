@@ -20,14 +20,14 @@ const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward
                 />
             </Pressable>
             {paused ? 
-                <Pressable onPress={() => onPause(false)}>
+                <Pressable onPress={onPause}>
                     <SimpleLineIcons 
                         name='control-play'
                         size={size}
                     />
                 </Pressable>
                 :
-                <Pressable onPress={() => onPause(true)}>
+                <Pressable onPress={onPause}>
                     <SimpleLineIcons 
                         name='control-pause'
                         size={size}

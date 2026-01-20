@@ -23,51 +23,80 @@ const ReaderPage = () => {
     const [word, setWord] = useState("");
     const [running, setRunning] = useState(false);
     const [paused, setPaused] = useState(false);
-    const iRef = useRef(0)
+
+    const startTimeRef = useRef(null)
+    const startIndexRef = useRef(0)
+    const currentIndexRef = useRef(0)
+    const rafRef = useRef(null)
     
-    const handleRewind = useCallback(() => {
-        iRef.current = Math.max(iRef.current - 9, 0);
-        setWord(words[iRef.current]);
-    }, [words])
+    const start = () => {
+        startIndexRef.current = 0;
+        currentIndexRef.current = 0;
+        startTimeRef.current = null;
+        setPaused(false);
+        setRunning(true);
+    }
 
-    const handleForward = useCallback(() => {
-        iRef.current = Math.min(iRef.current + 9, words.length - 1);
-        setWord(words[iRef.current]);
-    }, [words])
+    const pause = () => {
+        startIndexRef.current = currentIndexRef.current;
+        startTimeRef.current = null;
+        setPaused(prev => !prev);
+    }
 
-    const handleGoToStart = useCallback(() => {
-        iRef.current = 0;
-        setWord(words[iRef.current]);
-    }, [words])
+    const seekIndex = (newIndex) => {
+        const clampedIndex = Math.max(0, Math.min(words.length - 1, newIndex));
+        startIndexRef.current = clampedIndex;
+        currentIndexRef.current = clampedIndex;
+        startTimeRef.current = null;
+        setWord(words[clampedIndex]);
+    }
 
-    const handleGoToEnd = useCallback(() => {
-        iRef.current = words.length - 1;
-        setWord(words[iRef.current]);
-    }, [words])
+    const handleGoToStart = () => {
+        startIndexRef.current = 0;
+        currentIndexRef.current = 0;
+        startTimeRef.current = null;
+        setWord(words[0] ?? "");
+    }
+
+    const handleGoToEnd = () => {
+        setRunning(false);
+        setPaused(false);
+        startIndexRef.current = 0;
+        currentIndexRef.current = 0;
+        startTimeRef.current = null;
+    }
 
     useEffect(() => {
         if (!running || paused)
             return;
 
-        const set = () => {
-            const currentI = iRef.current;
+        const msPerWord = 60000 / wordsPerMin;
 
-            if (currentI >= words.length) {
+        const tick = (currTime) => {
+            if (!startTimeRef.current) {
+                startTimeRef.current = currTime;
+            }
+
+            const elapsedTime = currTime - startTimeRef.current;
+            const index = startIndexRef.current + Math.floor(elapsedTime / msPerWord);
+            if (index >= words.length) {
                 setRunning(false);
-                iRef.current = 0;
                 return;
             }
 
-            setWord(() => words[currentI]);
-            iRef.current += 1;
+            currentIndexRef.current = index;
+            setWord(words[index]);
+
+            rafRef.current = requestAnimationFrame(tick);
         }
 
-        set();
+        rafRef.current = requestAnimationFrame(tick);
 
-        const intvl = setInterval(set, 60 / wordsPerMin * 1000)
+        return () => {
+            cancelAnimationFrame(rafRef.current);
+        }
 
-        return () => clearInterval(intvl);
-    }, [running, words, wordsPerMin, paused])
+    }, [running, paused, wordsPerMin])
 
     return (
         <ThemedView style={styles.container}>
@@ -86,15 +115,15 @@ const ReaderPage = () => {
                 <Reader 
                     word={word} 
                     paused={paused} 
-                    onPause={setPaused} 
-                    onRewind={handleRewind} 
-                    onForward={handleForward} 
+                    onPause={pause} 
+                    onRewind={() => seekIndex(currentIndexRef.current - 10)} 
+                    onForward={() => seekIndex(currentIndexRef.current + 10)} 
                     onStart={handleGoToStart} 
                     onEnd={handleGoToEnd}
                 /> 
                 :
                 <Pressable 
-                    onPress={() => setRunning(true)}
+                    onPress={start}
                     style={{width: '50%', height: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'purple', borderRadius: 8, margin: 8}}
                 >
                     <ThemedText>
