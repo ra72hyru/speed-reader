@@ -133,7 +133,7 @@ const ReaderPage = () => {
             }
 
             <ThemedRangeInputWithButtons 
-                wordsPerMinute={wordsPerMin} 
+                value={wordsPerMin} 
                 onChange={setWordsPerMin}
             /> 
 

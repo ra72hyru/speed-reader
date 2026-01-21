@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import ThemedText from "./ThemedText";
 import ThemedView from "./ThemedView";
 
@@ -10,7 +10,7 @@ const getFixationIndex = (word) => {
     return 3;
 };
 
-const FixatedWord = ({ word, indentation = 120, height = 50, fontSize = 36 }) => {
+const FixatedWord = ({ word, style, indentation = 120, height = 50, fontSize = 36 }) => {
 
     const fixedIndex = getFixationIndex(word)
 
@@ -24,14 +24,14 @@ const FixatedWord = ({ word, indentation = 120, height = 50, fontSize = 36 }) =>
             </ThemedView>
         </ThemedView> */
 
-        <ThemedView style={{width: '100%', flexDirection: 'row', borderWidth: 0, alignItems: 'center'}}>
-            <ThemedView style={{width: indentation - anchorWidth / 2, alignItems: 'flex-end', fontSize}}>
+        <ThemedView style={[{width: '100%', flexDirection: 'row', borderWidth: 0, alignItems: 'center'}, style]}>
+            <ThemedView style={[{width: indentation - anchorWidth, alignItems: 'flex-end', fontSize}, styles.innerView]}>
                 <ThemedText style={{fontSize, fontFamily: 'monospace'}}>{word.slice(0, fixedIndex)}</ThemedText>
             </ThemedView>
-            <ThemedView style={{width: anchorWidth, alignItems: 'center'}}>
+            <ThemedView style={[{width: anchorWidth, alignItems: 'center'}, styles.innerView]}>
                 <ThemedText style={{color: 'red', fontSize, fontFamily: 'monospace'}}>{word.slice(fixedIndex, fixedIndex + 1)}</ThemedText>
             </ThemedView>
-            <ThemedView style={{flex: 1, alignItems: 'flex-start'}}>
+            <ThemedView style={[{flex: 1, alignItems: 'flex-start'}, styles.innerView]}>
                 <ThemedText style={{fontSize, fontFamily: 'monospace'}}>{word.slice(fixedIndex + 1)}</ThemedText>
             </ThemedView>
         </ThemedView>
@@ -39,3 +39,9 @@ const FixatedWord = ({ word, indentation = 120, height = 50, fontSize = 36 }) =>
 };
 
 export default FixatedWord;
+
+const styles = StyleSheet.create({
+    innerView: {
+        backgroundColor: 'rgba(0, 0, 0, 0)'
+    }
+});

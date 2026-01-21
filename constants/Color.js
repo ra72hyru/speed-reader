@@ -5,8 +5,8 @@ export const Colors = {
     dark: {
         title: '#ffffff',
         text: '#f0f0f0',
-        background: '#050505',
-        background2: '#1f1f1f',
+        background: '#121212',
+        background2: '#2a2a2a',
         background3: '#383838',
         borderColor: '#757575',
     },
