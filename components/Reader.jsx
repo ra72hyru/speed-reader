@@ -7,7 +7,7 @@ import ThemedCrosshair from '../components/ThemedCrosshair';
 const Reader = ({ word, paused, onPause, onRewind, onForward, onStart, onEnd }) => {
 
     return (
-        <ThemedView style={styles.container}>
+        <ThemedView style={styles.container} safe={true}>
 
             <ThemedCrosshair>
                 <FixatedWord 
