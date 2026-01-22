@@ -1,11 +1,7 @@
-import { View, Text, useColorScheme, TextInput } from 'react-native'
-import React, { useState } from 'react'
-import { Colors } from '../constants/Color'
+import {  TextInput } from 'react-native'
 import { useTheme } from '../hooks/themeContext'
 
 const ThemedTextInput = ({fontSize = 16, height='40%', style, text="", onChange, backgroundColorLevel=2}) => {
-    const colorScheme = useColorScheme()
-    //const theme = Colors[colorScheme] ?? Colors.light
     const {theme} = useTheme();
 
     return (

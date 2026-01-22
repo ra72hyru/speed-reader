@@ -1,11 +1,7 @@
-import { useColorScheme } from 'react-native'
-import { Colors } from '../constants/Color'
 import ThemedView from './ThemedView'
 import { useTheme } from '../hooks/themeContext'
 
 const ThemedCrosshair = ({ children, style, indentation = 120, fontSize = 36, crosshairLineWidth = 2, crosshairDistance = 16, crosshairWidth=95, crosshairHeight = 16 }) => {
-    const colorScheme = useColorScheme()
-    //const theme = Colors[colorScheme] ?? Colors.light
     const {theme} = useTheme();
 
     const anchorWidth = fontSize * 0.6;
