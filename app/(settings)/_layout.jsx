@@ -3,11 +3,14 @@ import { Stack } from 'expo-router'
 import { navigate } from 'expo-router/build/global-state/routing'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useTheme } from '../../hooks/themeContext'
 
 const SettingsLayout = () => {
+    const {theme} = useTheme();
+
     return (
         <>
-            <Stack>
+            <Stack screenOptions={{contentStyle: {backgroundColor: theme.background}, headerStyle: {backgroundColor: theme.background2}, headerTintColor: theme.text, animation: 'slide_from_right'}}>
                 <Stack.Screen 
                     name='settings'
                     options={{title: 'Settings'}}

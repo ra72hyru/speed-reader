@@ -2,31 +2,43 @@ import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import { Stack } from 'expo-router'
 import { navigate } from 'expo-router/build/global-state/routing'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ThemeProvider, useTheme } from '../hooks/themeContext'
+import * as SystemUI from 'expo-system-ui'
+
+
+const RootContent = () => {
+    const {theme} = useTheme();
+    SystemUI.setBackgroundColorAsync(theme.background);
+
+    return (
+        <Stack screenOptions={{contentStyle: {backgroundColor: theme.background}, headerStyle: {backgroundColor: theme.background2}, headerTintColor: theme.text}}>
+            <Stack.Screen name='index' options={{title: 'Home', animation: 'slide_from_right'}} />
+            <Stack.Screen 
+                name='reader' 
+                options={{
+                    title: 'Reader', 
+                    animation: 'none', 
+                    headerRight: () => (
+                                        <TouchableOpacity onPress={() => navigate('/(settings)/settings')}>
+                                            <SimpleLineIcons name='settings' color={theme.text} size={28}/>
+                                        </TouchableOpacity>
+                                    )
+                }} 
+            />
+            <Stack.Screen 
+                name='(settings)'
+                options={{headerShown: false, animation: 'slide_from_right'}}
+            />
+        </Stack>
+    );
+}
 
 const RootLayout = () => {
     return (
-        <>
-            <Stack>
-                <Stack.Screen name='index' options={{title: 'Home', animation: 'slide_from_right'}} />
-                <Stack.Screen 
-                    name='reader' 
-                    options={{
-                        title: 'Reader', 
-                        animation: 'fade', 
-                        headerRight: () => (
-                                            <TouchableOpacity onPress={() => navigate('/(settings)/settings')}>
-                                                <SimpleLineIcons name='settings' color='black' size={28}/>
-                                            </TouchableOpacity>
-                                        )
-                    }} 
-                />
-                <Stack.Screen 
-                    name='(settings)'
-                    options={{headerShown: false}}
-                />
-            </Stack>
+        <ThemeProvider>
+            <RootContent />
 {/*             <Text style={styles.footer}>Footer</Text> */}
-        </>
+        </ThemeProvider>
     )
 }
 

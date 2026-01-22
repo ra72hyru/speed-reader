@@ -7,10 +7,12 @@ import ThemedText from '../../components/ThemedText'
 import ThemedRangeInputWithButtons from '../../components/ThemedRangeInputWithButtons'
 import Spacer from '../../components/Spacer'
 import { Colors } from '../../constants/Color'
+import { useTheme } from '../../hooks/themeContext'
 
 const GuidingLinesSettings = () => {
     const colorScheme = useColorScheme();
-    const theme = Colors[colorScheme] ?? Colors.light;
+    //const theme = Colors[colorScheme] ?? Colors.light;
+    const {theme} = useTheme();
 
     const [crosshairWidth, setCrosshairWidth] = useState(90);
     const [crosshairHeight, setCrosshairHeight] = useState(16);

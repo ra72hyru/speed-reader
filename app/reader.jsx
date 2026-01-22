@@ -105,7 +105,7 @@ const ReaderPage = () => {
                     style={{margin: 16}} 
                     text={text}
                     onChange={setText}
-                    backgroundColorLevel={1}
+                    backgroundColorLevel={2}
                 />
             }
 

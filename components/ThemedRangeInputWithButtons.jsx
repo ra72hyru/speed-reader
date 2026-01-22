@@ -4,10 +4,12 @@ import ThemedText from './ThemedText'
 import ThemedView from './ThemedView'
 import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import { Colors } from '../constants/Color'
+import { useTheme } from '../hooks/themeContext'
 
 const ThemedRangeInputWithButtons = ({width=60, value=300, onChange, lowerLimit=60, upperLimit=1000, step=5, size=28, style }) => {
     const colorScheme = useColorScheme()
-    const theme = Colors[colorScheme] ?? Colors.light
+    //const theme = Colors[colorScheme] ?? Colors.light
+    const {theme} = useTheme();
 
     return (
         <ThemedView style={[{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: `${width}%`}, style]}>
