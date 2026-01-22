@@ -1,53 +1,86 @@
-import { View, Text, Pressable } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import ThemedView from './ThemedView'
+import { useTheme } from '../hooks/themeContext'
 
 const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward, onStart, onEnd }) => {
-
+    const {theme} = useTheme();
 
     return (
-        <ThemedView style={[{flexDirection: 'row', justifyContent: 'space-around'}, style]}>
-            <Pressable onPress={() => onStart()}>
+        <ThemedView style={[styles.container, style]}>
+            <TouchableOpacity onPress={() => onStart()} style={[styles.button, {backgroundColor: theme.text}]}>
                 <SimpleLineIcons 
                     name='control-start'
-                    size={Math.max(1, size - 2)}
+                    size={Math.max(8, size - 4)}
+                    color={theme.background}
+                    style={{marginLeft: 0}}
                 />
-            </Pressable>
-            <Pressable onPress={() => onRewind()}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onRewind()} style={[styles.button, {backgroundColor: theme.text}]}>
                 <SimpleLineIcons 
                     name='control-rewind'
                     size={size}
+                    style={{marginLeft: -2}}
                 />
-            </Pressable>
+            </TouchableOpacity>
             {paused ? 
-                <Pressable onPress={onPause}>
+                <TouchableOpacity onPress={onPause} style={[styles.playPauseButton, {backgroundColor: theme.text}]}>
                     <SimpleLineIcons 
                         name='control-play'
                         size={size}
+                        style={{marginLeft: 4}}
                     />
-                </Pressable>
+                </TouchableOpacity>
                 :
-                <Pressable onPress={onPause}>
+                <TouchableOpacity onPress={onPause} style={[styles.playPauseButton, {backgroundColor: theme.text}]}>
                     <SimpleLineIcons 
                         name='control-pause'
                         size={size}
+                        style={{marginLeft: 0}}
                     />
-                </Pressable>
+                </TouchableOpacity>
             }
-            <Pressable onPress={() => onForward()}>
+            <TouchableOpacity onPress={() => onForward()} style={[styles.button, {backgroundColor: theme.text}]}>
                 <SimpleLineIcons 
                     name='control-forward'
                     size={size}
+                    style={{marginLeft: 2}}
                 />
-            </Pressable>
-            <Pressable onPress={() => onEnd()}>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => onEnd()} style={[styles.button, {backgroundColor: theme.text}]}>
                 <SimpleLineIcons 
                     name='control-end'
-                    size={Math.max(1, size - 2)}
+                    size={Math.max(8, size - 4)}
+                    style={{marginLeft: 2}}
                 />
-            </Pressable>
+            </TouchableOpacity>
         </ThemedView>
     )
 }
 
-export default ControlBar
+export default ControlBar;
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row', 
+        justifyContent: 'center',
+        alignItems: 'center', 
+        gap: 8,
+    },
+    button: {
+        borderRadius: 9999,
+        padding: 8,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 60,
+        height: 60
+    },
+    playPauseButton: {
+        borderRadius: 9999,
+        padding: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 75,
+        height: 75
+    }
+});

@@ -17,7 +17,7 @@ const Reader = ({ word, paused, onPause, onRewind, onForward, onStart, onEnd }) 
             </ThemedCrosshair>
 
             <ControlBar 
-                style={{width: '90%', marginLeft: 8, marginRight: 8, backgroundColor: 'green'}}
+                style={{width: '100%'}}
                 paused={paused}
                 onPause={onPause}
                 onRewind={onRewind}
