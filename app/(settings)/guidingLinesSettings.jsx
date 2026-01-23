@@ -1,18 +1,14 @@
-import { StyleSheet, Text, useColorScheme, View } from 'react-native'
+import { StyleSheet, useColorScheme } from 'react-native'
 import { useEffect, useRef, useState } from 'react'
 import ThemedView from '../../components/ThemedView'
 import ThemedCrosshair from '../../components/ThemedCrosshair'
 import FixatedWord from '../../components/FixatedWord'
 import ThemedText from '../../components/ThemedText'
 import ThemedRangeInputWithButtons from '../../components/ThemedRangeInputWithButtons'
-import Spacer from '../../components/Spacer'
-import { Colors } from '../../constants/Color'
 import { useTheme } from '../../hooks/themeContext'
 import { useCrosshair } from '../../hooks/crosshairContext'
 
 const GuidingLinesSettings = () => {
-    const colorScheme = useColorScheme();
-    //const theme = Colors[colorScheme] ?? Colors.light;
     const {theme} = useTheme();
     const {crosshairOptions, setCrosshairOption} = useCrosshair();
 
@@ -22,27 +18,6 @@ const GuidingLinesSettings = () => {
     const [crosshairDistance, setCrosshairDistance] = useState(crosshairOptions.crosshairDistance/* 16 */);
 
     const buttonSize = 32;
-
-    const widthRef = useRef(crosshairOptions.crosshairWidth);
-    const heightRef = useRef(crosshairOptions.crosshairHeight);
-    const lineWidthRef = useRef(crosshairOptions.crosshairLineWidth);
-    const distanceRef = useRef(crosshairOptions.crosshairDistance);
-
-    useEffect(() => {
-        widthRef.current = crosshairWidth;
-    }, [crosshairWidth])
-
-    useEffect(() => {
-        heightRef.current = crosshairHeight;
-    }, [crosshairHeight])
-
-    useEffect(() => {
-        lineWidthRef.current = crosshairLineWidth;
-    }, [crosshairLineWidth])
-
-    useEffect(() => {
-        distanceRef.current = crosshairDistance;
-    }, [crosshairDistance])
 
     return (
         <ThemedView style={styles.container}>
