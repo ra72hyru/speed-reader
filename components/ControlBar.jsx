@@ -20,6 +20,7 @@ const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward
                 <SimpleLineIcons 
                     name='control-rewind'
                     size={size}
+                    color={theme.background}
                     style={{marginLeft: -2}}
                 />
             </TouchableOpacity>
@@ -28,6 +29,7 @@ const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward
                     <SimpleLineIcons 
                         name='control-play'
                         size={size}
+                        color={theme.background}
                         style={{marginLeft: 4}}
                     />
                 </TouchableOpacity>
@@ -36,6 +38,7 @@ const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward
                     <SimpleLineIcons 
                         name='control-pause'
                         size={size}
+                        color={theme.background}
                         style={{marginLeft: 0}}
                     />
                 </TouchableOpacity>
@@ -44,6 +47,7 @@ const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward
                 <SimpleLineIcons 
                     name='control-forward'
                     size={size}
+                    color={theme.background}
                     style={{marginLeft: 2}}
                 />
             </TouchableOpacity>
@@ -51,6 +55,7 @@ const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward
                 <SimpleLineIcons 
                     name='control-end'
                     size={Math.max(8, size - 4)}
+                    color={theme.background}
                     style={{marginLeft: 2}}
                 />
             </TouchableOpacity>
