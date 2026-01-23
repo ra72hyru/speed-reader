@@ -1,5 +1,5 @@
 import { StyleSheet, Text, useColorScheme, View } from 'react-native'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ThemedView from '../../components/ThemedView'
 import ThemedCrosshair from '../../components/ThemedCrosshair'
 import FixatedWord from '../../components/FixatedWord'
@@ -8,18 +8,41 @@ import ThemedRangeInputWithButtons from '../../components/ThemedRangeInputWithBu
 import Spacer from '../../components/Spacer'
 import { Colors } from '../../constants/Color'
 import { useTheme } from '../../hooks/themeContext'
+import { useCrosshair } from '../../hooks/crosshairContext'
 
 const GuidingLinesSettings = () => {
     const colorScheme = useColorScheme();
     //const theme = Colors[colorScheme] ?? Colors.light;
     const {theme} = useTheme();
+    const {crosshairOptions, setCrosshairOption} = useCrosshair();
 
-    const [crosshairWidth, setCrosshairWidth] = useState(90);
-    const [crosshairHeight, setCrosshairHeight] = useState(16);
-    const [crosshairDistance, setCrosshairDistance] = useState(16);
-    const [crosshairLineWidth, setCrosshairLineWidth] = useState(2);
+    const [crosshairWidth, setCrosshairWidth] = useState(crosshairOptions.crosshairWidth/*  ?? 90 */);
+    const [crosshairHeight, setCrosshairHeight] = useState(crosshairOptions.crosshairHeight /* ?? 16 */);
+    const [crosshairLineWidth, setCrosshairLineWidth] = useState(crosshairOptions.crosshairLineWidth /* 2 */);
+    const [crosshairDistance, setCrosshairDistance] = useState(crosshairOptions.crosshairDistance/* 16 */);
 
     const buttonSize = 32;
+
+    const widthRef = useRef(crosshairOptions.crosshairWidth);
+    const heightRef = useRef(crosshairOptions.crosshairHeight);
+    const lineWidthRef = useRef(crosshairOptions.crosshairLineWidth);
+    const distanceRef = useRef(crosshairOptions.crosshairDistance);
+
+    useEffect(() => {
+        widthRef.current = crosshairWidth;
+    }, [crosshairWidth])
+
+    useEffect(() => {
+        heightRef.current = crosshairHeight;
+    }, [crosshairHeight])
+
+    useEffect(() => {
+        lineWidthRef.current = crosshairLineWidth;
+    }, [crosshairLineWidth])
+
+    useEffect(() => {
+        distanceRef.current = crosshairDistance;
+    }, [crosshairDistance])
 
     return (
         <ThemedView style={styles.container}>
@@ -31,7 +54,8 @@ const GuidingLinesSettings = () => {
                     <ThemedText style={styles.value}>{crosshairWidth}</ThemedText>
                 </ThemedText>
                 <ThemedRangeInputWithButtons 
-                    onChange={setCrosshairWidth}
+                    onChange={(width) => setCrosshairWidth(width)}
+                    onComplete={(width) => setCrosshairOption('crosshairWidth', width)}
                     lowerLimit={0}
                     upperLimit={100}
                     size={buttonSize}
@@ -48,7 +72,8 @@ const GuidingLinesSettings = () => {
                     <ThemedText style={styles.value}>{crosshairHeight}</ThemedText>
                 </ThemedText>
                 <ThemedRangeInputWithButtons 
-                    onChange={setCrosshairHeight}
+                    onChange={(height) => setCrosshairHeight(height)}
+                    onComplete={(height) => setCrosshairOption('crosshairHeight', height)}
                     lowerLimit={0}
                     upperLimit={100}
                     size={buttonSize}
@@ -65,7 +90,8 @@ const GuidingLinesSettings = () => {
                     <ThemedText style={styles.value}>{crosshairLineWidth}</ThemedText>
                 </ThemedText>
                 <ThemedRangeInputWithButtons 
-                    onChange={setCrosshairLineWidth}
+                    onChange={(lineWidth) => setCrosshairLineWidth(lineWidth)}
+                    onComplete={(lineWidth) => setCrosshairOption('crosshairLineWidth', lineWidth)}
                     lowerLimit={0}
                     upperLimit={10}
                     size={buttonSize}
@@ -82,7 +108,8 @@ const GuidingLinesSettings = () => {
                     <ThemedText style={styles.value}>{crosshairDistance}</ThemedText>
                 </ThemedText>
                 <ThemedRangeInputWithButtons 
-                    onChange={setCrosshairDistance}
+                    onChange={(distance) => setCrosshairDistance(distance)}
+                    onComplete={(distance) => setCrosshairOption('crosshairDistance', distance)}
                     lowerLimit={0}
                     upperLimit={75}
                     size={buttonSize}
@@ -108,6 +135,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         gap: 12,
+        marginTop: 12
         //alignItems: 'center',
     },
     settingContainer: {

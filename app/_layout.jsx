@@ -5,6 +5,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ThemeProvider, useTheme } from '../hooks/themeContext'
 import * as SystemUI from 'expo-system-ui'
 import { StatusBar } from 'expo-status-bar'
+import { MenuProvider } from 'react-native-popup-menu'
+import { CrosshairProvider } from '../hooks/crosshairContext'
 
 
 const RootContent = () => {
@@ -40,7 +42,11 @@ const RootContent = () => {
 const RootLayout = () => {
     return (
         <ThemeProvider>
-            <RootContent />
+            <CrosshairProvider>
+                <MenuProvider>
+                    <RootContent />
+                </MenuProvider>
+            </CrosshairProvider>
 {/*             <Text style={styles.footer}>Footer</Text> */}
         </ThemeProvider>
     )

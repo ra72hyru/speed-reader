@@ -4,7 +4,7 @@ import ThemedView from './ThemedView'
 import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import { useTheme } from '../hooks/themeContext'
 
-const ThemedRangeInputWithButtons = ({width=60, value=300, onChange, lowerLimit=60, upperLimit=1000, step=5, size=28, style }) => {
+const ThemedRangeInputWithButtons = ({width=60, value=300, onChange, onComplete, lowerLimit=60, upperLimit=1000, step=5, size=28, style }) => {
     const {theme} = useTheme();
 
     return (
@@ -26,6 +26,7 @@ const ThemedRangeInputWithButtons = ({width=60, value=300, onChange, lowerLimit=
                     lowerLimit={lowerLimit}
                     upperLimit={upperLimit}
                     onValueChange={onChange}
+                    onSlidingComplete={onComplete}
                 />
                 </View>
             <TouchableOpacity style={{alignItems: 'flex-start'}} onPress={() => onChange(prev => prev === upperLimit ? prev : prev + step)}>

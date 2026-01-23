@@ -3,30 +3,46 @@ import ThemedView from '../../components/ThemedView'
 import ThemedText from '../../components/ThemedText'
 import { Link } from 'expo-router';
 import { useTheme } from '../../hooks/themeContext';
+import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons';
 
 
 const settings = () => {
-    const {setTheme} = useTheme();
+    const {theme, setTheme} = useTheme();
 
     return (
         <ThemedView style={styles.container}>
             <Link href='/guidingLinesSettings'>
-                <ThemedText style={styles.header}>Guiding Lines</ThemedText>
+                <ThemedView style={styles.subcontainer}>
+                    <SimpleLineIcons 
+                        name='target'
+                        color={theme.text}
+                        size={28}
+                    />
+                        <ThemedText style={styles.header}>Fixation Lines</ThemedText>
+                </ThemedView>
             </Link>
-            <ThemedView style={styles.subcontainer}>
-                <ThemedText>Width</ThemedText>
-                <ThemedText>Height of vertical lines</ThemedText>
-                <ThemedText>Line Width</ThemedText>
-            </ThemedView>
-            <TouchableOpacity onPress={() => setTheme('auto')}>
-                <Text style={{color: 'red'}}>System Default</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setTheme('light')}>
-                <Text style={{color: 'red'}}>Light</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => setTheme('dark')}>
-                <Text style={{color: 'red'}}>Dark</Text>
-            </TouchableOpacity>
+
+            <Link href='/fixatedWordSettings'>
+                <ThemedView style={styles.subcontainer}>
+                    <SimpleLineIcons 
+                        name='speech'
+                        color={theme.text}
+                        size={28}
+                    />
+                    <ThemedText style={styles.header}>Word</ThemedText>
+                </ThemedView>
+            </Link>
+            
+            <Link href='/themeSettings'>
+                <ThemedView style={styles.subcontainer}>
+                    <SimpleLineIcons 
+                        name='equalizer'
+                        color={theme.text}
+                        size={28}
+                        />
+                    <ThemedText style={styles.header}>Color Theme</ThemedText>
+                </ThemedView>
+            </Link>
         </ThemedView>
     )
 }
@@ -37,12 +53,17 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         justifyContent: 'flex-start',
-        marginLeft: 12,
-        flex: 1
+        marginLeft: 0,
+        marginTop: 24,
+        flex: 1,
+        gap: 32
     },
     subcontainer: {
         justifyContent: 'flex-start',
-        marginLeft: 12
+        alignItems: 'center',
+        flexDirection: 'row',
+        gap: 24,
+        paddingLeft: 24,
     },
     header: {
         fontSize: 24

@@ -3,13 +3,21 @@ import ThemedView from '../components/ThemedView'
 import FixatedWord from '../components/FixatedWord';
 import ControlBar from '../components/ControlBar';
 import ThemedCrosshair from '../components/ThemedCrosshair';
+import { useCrosshair } from '../hooks/crosshairContext';
 
 const Reader = ({ word, paused, onPause, onRewind, onForward, onStart, onEnd }) => {
+
+    const {crosshairOptions} = useCrosshair();
 
     return (
         <ThemedView style={styles.container} safe={true}>
 
-            <ThemedCrosshair>
+            <ThemedCrosshair
+                crosshairWidth={crosshairOptions.crosshairWidth}
+                crosshairHeight={crosshairOptions.crosshairHeight}
+                crosshairLineWidth={crosshairOptions.crosshairLineWidth}
+                crosshairDistance={crosshairOptions.crosshairDistance}
+            >
                 <FixatedWord 
                     word={word} 
                     style={{height: 60, fontSize: 36}} 

@@ -19,6 +19,14 @@ const SettingsLayout = () => {
                     name='guidingLinesSettings'
                     options={{title: '', animation: 'slide_from_right'}}
                 />
+                <Stack.Screen 
+                    name='themeSettings'
+                    options={{title: '', animation: 'slide_from_right'}}
+                />
+                <Stack.Screen 
+                    name='fixatedWordSettings'
+                    options={{title: '', animation: 'slide_from_right'}}
+                />
             </Stack>
         </>
     )
