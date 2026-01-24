@@ -3,7 +3,7 @@ import SimpleLineIcons from '@react-native-vector-icons/simple-line-icons'
 import ThemedView from './ThemedView'
 import { useTheme } from '../hooks/themeContext'
 
-const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward, onStart, onEnd }) => {
+const ControlBar = ({ paused=false, size=32, style, onPause, onResume, onRewind, onForward, onStart, onEnd }) => {
     const {theme} = useTheme();
 
     return (
@@ -25,7 +25,7 @@ const ControlBar = ({ paused=false, size=32, style, onPause, onRewind, onForward
                 />
             </TouchableOpacity>
             {paused ? 
-                <TouchableOpacity onPress={onPause} style={[styles.playPauseButton, {backgroundColor: theme.text}]}>
+                <TouchableOpacity onPress={onResume} style={[styles.playPauseButton, {backgroundColor: theme.text}]}>
                     <SimpleLineIcons 
                         name='control-play'
                         size={size}

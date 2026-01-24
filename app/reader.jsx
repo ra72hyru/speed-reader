@@ -9,6 +9,7 @@ import ThemedRangeInputWithButtons from '../components/ThemedRangeInputWithButto
 import ControlBar from '../components/ControlBar';
 import ThemedCrosshair from '../components/ThemedCrosshair';
 import Reader from '../components/Reader';
+import { useFocusEffect } from 'expo-router';
 
 const ReaderPage = () => {
     //const words = ["This", "is", "a", "small", "test.", "Just", "for", "testing", "purposes.", "Here", "desoxyribonukleinsäure", "came", "a", "long", "word."];
@@ -40,7 +41,11 @@ const ReaderPage = () => {
     const pause = () => {
         startIndexRef.current = currentIndexRef.current;
         startTimeRef.current = null;
-        setPaused(prev => !prev);
+        setPaused(() => true);
+    }
+
+    const resume = () => {
+        setPaused(() => false);
     }
 
     const seekIndex = (newIndex) => {
@@ -98,6 +103,14 @@ const ReaderPage = () => {
 
     }, [running, paused, wordsPerMin])
 
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                pause();
+            }
+        }, [])
+    );
+
     return (
         <ThemedView style={styles.container}>
             {!running && 
@@ -115,7 +128,8 @@ const ReaderPage = () => {
                 <Reader 
                     word={word} 
                     paused={paused} 
-                    onPause={pause} 
+                    onPause={pause}
+                    onResume={resume} 
                     onRewind={() => seekIndex(currentIndexRef.current - 10)} 
                     onForward={() => seekIndex(currentIndexRef.current + 10)} 
                     onStart={handleGoToStart} 

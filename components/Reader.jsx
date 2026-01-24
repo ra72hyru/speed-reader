@@ -5,7 +5,7 @@ import ControlBar from '../components/ControlBar';
 import ThemedCrosshair from '../components/ThemedCrosshair';
 import { useCrosshair } from '../hooks/crosshairContext';
 
-const Reader = ({ word, paused, onPause, onRewind, onForward, onStart, onEnd }) => {
+const Reader = ({ word, paused, onPause, onResume, onRewind, onForward, onStart, onEnd }) => {
 
     const {crosshairOptions} = useCrosshair();
 
@@ -28,6 +28,7 @@ const Reader = ({ word, paused, onPause, onRewind, onForward, onStart, onEnd }) 
                 style={{width: '100%'}}
                 paused={paused}
                 onPause={onPause}
+                onResume={onResume}
                 onRewind={onRewind}
                 onForward={onForward}
                 onStart={onStart}
