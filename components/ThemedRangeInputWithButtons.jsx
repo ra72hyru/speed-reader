@@ -9,7 +9,7 @@ const ThemedRangeInputWithButtons = ({width=60, value=300, onChange, onComplete,
 
     return (
         <ThemedView style={[{flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: `${width}%`}, style]}>
-            <TouchableOpacity style={{alignItems: 'flex-end'}} onPress={() => onChange(prev => prev === lowerLimit ? prev : prev - step)}>
+            <TouchableOpacity style={{alignItems: 'flex-end'}} onPress={() => {onChange(prev => prev === lowerLimit ? prev : prev - step); onComplete(value - step <= lowerLimit ? lowerLimit : value - step);}}>
                 <SimpleLineIcons 
                     name='minus'
                     size={size}
@@ -29,7 +29,7 @@ const ThemedRangeInputWithButtons = ({width=60, value=300, onChange, onComplete,
                     onSlidingComplete={onComplete}
                 />
                 </View>
-            <TouchableOpacity style={{alignItems: 'flex-start'}} onPress={() => onChange(prev => prev === upperLimit ? prev : prev + step)}>
+            <TouchableOpacity style={{alignItems: 'flex-start'}} onPress={() => {onChange(prev => prev === upperLimit ? prev : prev + step); onComplete(value >= upperLimit ? upperLimit : value + step);}}>
                 <SimpleLineIcons 
                     name='plus'
                     size={size}
