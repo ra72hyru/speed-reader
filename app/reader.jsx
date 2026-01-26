@@ -1,15 +1,13 @@
-import { Pressable, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import ThemedView from '../components/ThemedView'
 import ThemedText from '../components/ThemedText';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Word from '../components/Word';
-import FixatedWord from '../components/FixatedWord';
 import ThemedTextInput from '../components/ThemedTextInput';
 import ThemedRangeInputWithButtons from '../components/ThemedRangeInputWithButtons';
-import ControlBar from '../components/ControlBar';
-import ThemedCrosshair from '../components/ThemedCrosshair';
+import Spacer from '../components/Spacer'
 import Reader from '../components/Reader';
 import { useFocusEffect } from 'expo-router';
+import ThemedButton from '../components/ThemedButton';
 
 const ReaderPage = () => {
     //const words = ["This", "is", "a", "small", "test.", "Just", "for", "testing", "purposes.", "Here", "desoxyribonukleinsäure", "came", "a", "long", "word."];
@@ -115,43 +113,56 @@ const ReaderPage = () => {
         <ThemedView style={styles.container}>
             {!running && 
                 <ThemedTextInput 
-                    style={{margin: 16}} 
+                    style={{margin: 16, width: '90%'}} 
                     text={text}
                     onChange={setText}
                     backgroundColorLevel={2}
                 />
             }
 
-            <ThemedText>{text}</ThemedText>
+            {running && <ThemedText>{text}</ThemedText>}
 
-            {running ?
-                <Reader 
-                    word={word} 
-                    paused={paused} 
-                    onPause={pause}
-                    onResume={resume} 
-                    onRewind={() => seekIndex(currentIndexRef.current - 10)} 
-                    onForward={() => seekIndex(currentIndexRef.current + 10)} 
-                    onStart={handleGoToStart} 
-                    onEnd={handleGoToEnd}
-                /> 
-                :
-                <Pressable 
-                    onPress={start}
-                    style={{width: '50%', height: 60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'purple', borderRadius: 8, margin: 8}}
-                >
-                    <ThemedText>
-                        Start
-                    </ThemedText>
-                </Pressable>
+            {running &&
+                <View style={{width: '100%'}}>
+                    <Reader 
+                        word={word} 
+                        paused={paused} 
+                        onPause={pause}
+                        onResume={resume} 
+                        onRewind={() => seekIndex(currentIndexRef.current - 10)} 
+                        onForward={() => seekIndex(currentIndexRef.current + 10)} 
+                        onStart={handleGoToStart} 
+                        onEnd={handleGoToEnd}
+                    /> 
+                </View>
             }
 
-            <ThemedRangeInputWithButtons 
-                value={wordsPerMin} 
-                onChange={setWordsPerMin}
-            /> 
+            <Spacer />
 
-            <ThemedText>{wordsPerMin}</ThemedText>
+            {!running && 
+                <View style={styles.wpmWrapper}>
+                    <ThemedText style={styles.wpm}>
+                        {wordsPerMin} words per minute
+                    </ThemedText>
+            
+                    <ThemedRangeInputWithButtons 
+                        value={wordsPerMin} 
+                        onChange={setWordsPerMin}
+                        style={{borderWidth: 0, padding: 8, borderRadius: 28}}
+                        width={90}
+                    />
+                </View>
+            }
+
+            <Spacer />
+
+            {!running && 
+                <ThemedButton text='Start' onPress={() => start()}>
+                    
+                </ThemedButton>
+            }
+
+
         </ThemedView>
     )
 }
@@ -160,13 +171,28 @@ export default ReaderPage
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
-        alignItems: 'stretch'
+        /* height: '100%',
+        alignItems: 'stretch' */
+        flex: 1,
+        alignItems: 'center'
     },
     input: {
         borderColor: 'black',
         borderWidth: 1,
         margin: 16,
         height: '40%'
+    },
+    wpmWrapper: {
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderColor: '#707070',
+        border: 1,
+        borderRadius: 28,
+        borderWidth: 1,
+        justifyContent: 'space-around'
+    },
+    wpm: {
+        fontSize: 18,
+        paddingLeft: 4
     }
 })

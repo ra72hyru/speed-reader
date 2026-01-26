@@ -57,7 +57,7 @@ export const CrosshairProvider = ({ children }) => {
         }
         setCrosshairOptions(updatedOptions);
         Storage.setItemSync('crosshairOptions', JSON.stringify(updatedOptions));
-        console.log('Saved crosshair: ', updatedOptions);
+        //console.log('Saved crosshair: ', updatedOptions);
     }
 
     return (
