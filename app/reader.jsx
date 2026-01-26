@@ -120,10 +120,10 @@ const ReaderPage = () => {
                 />
             }
 
-            {running && <ThemedText>{text}</ThemedText>}
+            {/* {running && <ThemedText>{text}</ThemedText>} */}
 
             {running &&
-                <View style={{width: '100%'}}>
+                <View style={styles.readerWrapper}>
                     <Reader 
                         word={word} 
                         paused={paused} 
@@ -194,5 +194,10 @@ const styles = StyleSheet.create({
     wpm: {
         fontSize: 18,
         paddingLeft: 4
+    },
+    readerWrapper: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'green'
     }
 })

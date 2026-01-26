@@ -44,5 +44,7 @@ export default Reader
 const styles = StyleSheet.create({
     container: {
         alignItems: 'stretch',
+        justifyContent: 'space-around',
+        flex: 1
     },
 })
